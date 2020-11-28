@@ -1,5 +1,6 @@
 package lesson2;
 
+import java.io.RandomAccessFile;
 import java.util.*;
 
 public class Main {
@@ -33,18 +34,20 @@ public class Main {
 //        System.out.println(msal.binaryFind(3));
 
         Random random = new Random();
-        MyArrayList<Integer> mal = new MyArrayList<>(1000000);
-        for (int i = 0; i < 1000000; i++) {
+        MyArrayList<Integer> mal = new MyArrayList<>(10);
+        for (int i = 0; i < 100; i++) {
             mal.add(random.nextInt(100));
         }
+         System.out.println("Текущий размер массива (капасити): " + mal.getCapacityAtMoment());
 
         System.out.println(mal);
+         long time = System.currentTimeMillis();
 //        mal.selectionSort(Comparator.naturalOrder());
 //        mal.selectionSort(Comparator.reverseOrder());
 //        mal.selectionSort((a,b)->{return a%10 - b %10;});
-
-//        mal.insertionSort();
-//        mal.bubbleSort();
+//        mal.insertionSort(Comparator.reverseOrder());
+        mal.bubbleSort(Comparator.reverseOrder());
+        System.out.println("Время выполнения сортировки: " + (System.currentTimeMillis() - time));
         System.out.println(mal);
     }
 }
