@@ -1,6 +1,9 @@
 package lesson2;
 
+import java.io.BufferedReader;
+import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
+import java.sql.Connection;
 import java.util.*;
 
 public class Main {
@@ -50,4 +53,5 @@ public class Main {
         System.out.println("Время выполнения сортировки: " + (System.currentTimeMillis() - time));
         System.out.println(mal);
     }
+    ObjectOutputStream
 }
