@@ -53,5 +53,5 @@ public class Main {
         System.out.println("Время выполнения сортировки: " + (System.currentTimeMillis() - time));
         System.out.println(mal);
     }
-    ObjectOutputStream
+
 }
