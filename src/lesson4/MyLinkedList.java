@@ -15,9 +15,71 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
 
-//    public ListIterator<T> listIterator() {
-//        return null;
-//    }
+    public ListIterator<T> listIterator() {
+        return new ListIter();
+    }
+
+    private class ListIter implements ListIterator<T>{
+        Node current = new Node(null, first);
+
+        @Override
+        public boolean hasNext() {
+            return current.getNext() != null;
+        }
+
+        @Override
+        public T next() {
+            current = current.getNext();
+            return current.getValue();
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return current.getPrev() != null;
+        }
+
+        @Override
+        public T previous() {
+            if (!hasPrevious()){
+                throw new NoSuchElementException();
+            }
+            return current.getPrev().getValue();
+        }
+
+        @Override
+        public int nextIndex() {
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            return indexOf(current.getNext().getValue());
+        }
+
+        @Override
+        public int previousIndex() {
+            if (!hasPrevious()){
+                throw new NoSuchElementException();
+            }
+            return indexOf(current.getPrev().getValue());
+        }
+
+        @Override
+        public void remove() {
+            if (current.getValue() == null){
+                throw new NoSuchElementException();
+            }
+        MyLinkedList.this.remove(current.getValue());
+        }
+
+        @Override
+        public void set(T t) {
+        current.getNext().setValue(t);
+        }
+
+        @Override
+        public void add(T t) {
+                throw new IllegalArgumentException();
+        }
+    }
 
     public MyLinkedList() {
         first = null;
@@ -36,6 +98,14 @@ public class MyLinkedList<T> implements Iterable<T> {
         public T next() {
             current = current.getNext();
             return current.getValue();
+        }
+
+        @Override
+        public void remove() {
+            if (isEmpty()) {
+                throw new NoSuchElementException();
+            }
+            MyLinkedList.this.remove(current.getValue());
         }
 
     }

@@ -1,6 +1,7 @@
 package lesson4;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class Main {
     public static void main(String[] args) {
@@ -31,17 +32,26 @@ public class Main {
 ////        mll.remove("mmm");
 //        System.out.println(mll);
 //
-//        for (String s : mll) {
-//            System.out.println(s);
-//        }
+        for (String s : mll) {
+            System.out.println(s);
+        }
+        ListIterator listIter = mll.listIterator();
+        listIter.next();
+        listIter.remove();
+        listIter.next();
+        listIter.add("hhh");
+
+        for (String s : mll) {
+            System.out.println(s);
+        }
 
         MyQueue<String> mq = new MyQueue<>();
         mq.enqueue("qwe");
         mq.enqueue("asd");
         mq.enqueue("zxc");
 
-        for (int i = 0; i < 3; i++) {
-            System.out.println(mq.dequeue());
-        }
+//        for (int i = 0; i < 3; i++) {
+//            System.out.println(mq.dequeue());
+//        }
     }
 }
