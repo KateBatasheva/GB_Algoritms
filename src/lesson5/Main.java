@@ -1,5 +1,13 @@
 package lesson5;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
+import sun.awt.Mutex;
+
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+
 public class Main {
     public static void main(String[] args) {
 //        System.out.println(fact(15));
@@ -11,9 +19,53 @@ public class Main {
 //        System.out.println(triangleNum(5));
 //        System.out.println(recTriangleNum(5));
 
-        System.out.println(multiply(3, 8));
-        System.out.println(recMultiply(3, 8));
+//        System.out.println(multiply(3, 8));
+//        System.out.println(recMultiply(3, 8));
 
+//        System.out.println(power(3, 8));
+//        System.out.println(recPower(3, 8));
+
+        Random random = new Random();
+
+        Package pack = new Package(15);
+        Item [] items = new Item[7];
+        for (int i = 0; i <items.length ; i++) {
+            items[i] = new Item (random.nextInt(10),random.nextInt(10));
+        }
+        for (int i = 0; i <items.length ; i++) {
+            System.out.println(items[i].toString());
+        }
+        ArrayList<Item> listItems = new ArrayList<>();
+        for (int i = 0; i < items.length; i++) {
+            listItems.add(items[i]);
+        }
+
+        packTo(pack, items);
+    }
+
+    private static ArrayList<Item> packTo(Package pack, Item [] items) {
+        int totalValue =0;
+        int totalWight = 0;
+        Item temp = null;
+//        int size = 0;
+        ArrayList <Item> packedItems = new ArrayList<>();
+//        Item [] packedItems = new Item[items.length];
+        if (totalWight==pack.getWight()){
+            return packedItems;
+        }
+        if (totalWight < pack.getWight()){
+            temp = items[0];
+            for (int i = 1; i <items.length ; i++) {
+                if (items[i].getValue()/items[i].getWight()>items[i-1].getValue()/items[i-1].getWight()){
+                    temp = items[i];
+                }
+            }
+            packedItems.add(temp);
+
+//            size++;
+        }
+        totalValue += temp.getValue();
+        totalWight+= temp.getWight();
     }
 
     public static int fact(int n) {
@@ -77,6 +129,21 @@ public class Main {
             return a;
         }
         return recMultiply(a, b - 1) + a;
+    }
+
+    public static int power (int a, int b){
+        int value = 1;
+        for (int i = 0; i <b ; i++) {
+            value*=a;
+        }
+        return value;
+    }
+
+    public static int recPower (int a, int b){
+        if (b ==1){
+            return a;
+        }
+        return recPower(a,b-1) * a;
     }
 
 }
