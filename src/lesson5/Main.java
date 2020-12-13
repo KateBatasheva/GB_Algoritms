@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Main {
+    private static int totalValue;
+    private static int totalWight;
     public static void main(String[] args) {
 //        System.out.println(fact(15));
 //        System.out.println(recFact(10));
@@ -27,46 +29,61 @@ public class Main {
 
         Random random = new Random();
 
-        Package pack = new Package(15);
+        Package pack = new Package(25);
         Item [] items = new Item[7];
         for (int i = 0; i <items.length ; i++) {
-            items[i] = new Item (random.nextInt(10),random.nextInt(10));
-        }
-        for (int i = 0; i <items.length ; i++) {
-            System.out.println(items[i].toString());
+            items[i] = new Item (random.nextInt(10)+1,random.nextInt(10)+1);
         }
         ArrayList<Item> listItems = new ArrayList<>();
         for (int i = 0; i < items.length; i++) {
             listItems.add(items[i]);
         }
+        ArrayList <Item> packedItems = new ArrayList<>();
 
-        packTo(pack, items);
+         System.out.println(listItems.toString());
+
+        packTo(pack, listItems, packedItems);
+        System.out.println(packedItems.toString());
+         System.out.println("Финальный вес коробки: " + totalWight + "\nФинальная стоимость содержимого: "+ totalValue);
     }
 
-    private static ArrayList<Item> packTo(Package pack, Item [] items) {
-        int totalValue =0;
-        int totalWight = 0;
+    private static ArrayList<Item> packTo(Package pack, ArrayList<Item> listItems,ArrayList<Item> packedItems ) {
         Item temp = null;
-//        int size = 0;
-        ArrayList <Item> packedItems = new ArrayList<>();
-//        Item [] packedItems = new Item[items.length];
         if (totalWight==pack.getWight()){
             return packedItems;
+
         }
         if (totalWight < pack.getWight()){
-            temp = items[0];
-            for (int i = 1; i <items.length ; i++) {
-                if (items[i].getValue()/items[i].getWight()>items[i-1].getValue()/items[i-1].getWight()){
-                    temp = items[i];
+            int j = 0;
+            while (listItems.get(j).getWight()> pack.getWight() - totalWight){
+                if (j == listItems.size()-1){
+                    return packedItems;
+                }
+                j++;
+            }
+            temp = listItems.get(j);
+            for (int i = j+1; i <listItems.size() ; i++) {
+                if (pack.getWight() - totalValue < listItems.get(i).getWight()){
+                    continue;
+                }
+                if (listItems.get(i).getValue()/listItems.get(i).getWight()>temp.getValue()/temp.getWight()){
+                    temp = listItems.get(i);
                 }
             }
+            System.out.println("remove "+ temp.toString());
+            listItems.remove(temp);
             packedItems.add(temp);
-
-//            size++;
+            System.out.println("add "+temp);
         }
         totalValue += temp.getValue();
         totalWight+= temp.getWight();
+
+        if (totalWight < pack.getWight()){
+            return packTo(pack, listItems, packedItems);
+        }
+        return packedItems;
     }
+
 
     public static int fact(int n) {
         int value = 1;
