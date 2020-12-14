@@ -3,10 +3,12 @@ package lesson5;
 import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import sun.awt.Mutex;
 
+import java.io.FileInputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class Main {
     private static int totalValue;
@@ -26,7 +28,6 @@ public class Main {
 
 //        System.out.println(power(3, 8));
 //        System.out.println(recPower(3, 8));
-
         Random random = new Random();
 
         Package pack = new Package(25);
