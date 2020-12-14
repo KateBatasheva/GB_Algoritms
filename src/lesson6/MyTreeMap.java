@@ -11,12 +11,25 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
         Node left;
         Node right;
         int size;
+        int hight;
 
         public Node(Key key, Value value) {
             this.key = key;
             this.value = value;
             size = 1;
+            hight = 0;
         }
+    }
+
+    private int hight(Node node) {
+        if (node == null){
+            return 0;
+        }
+    return node.hight;
+    }
+
+    public int hight (){
+        return hight(root);
     }
 
     public int size() {
@@ -81,8 +94,14 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
             node.value = value;
         } else if (cmp < 0) {
             node.left = put(node.left, key, value);
+            if (hight(node.left)>= hight(node.right)){
+                node.hight = hight(node.left) +1;
+            }
         } else {
             node.right = put(node.right, key, value);
+            if (hight(node.right)>= hight(node.left)){
+                node.hight = hight(node.right) +1;
+            }
         }
         node.size = size(node.left) + size(node.right) + 1;
         return node;
@@ -149,6 +168,21 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
         return node;
     }
 
+    public boolean isBalanced (){
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced (Node node) {
+        if (isEmpty()) {
+            return true;
+        } else if (node.left == null || node.right == null) {
+            return Math.abs(hight(node.right) - hight(node.left)) <= 1;
+        }
+            else {
+            return isBalanced(node.left) && isBalanced(node.right) && Math.abs(hight(node.right) - hight(node.left)) <= 1;
+        }
+    }
+
 
     @Override
     public String toString() {
@@ -159,6 +193,6 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
         if (node == null) {
             return "";
         }
-        return toString(node.left) + " " + node.key + " " + toString(node.right);
+        return  toString(node.left) + " " + node.key + " " + toString(node.right);
     }
 }
