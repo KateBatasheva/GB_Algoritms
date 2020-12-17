@@ -41,7 +41,6 @@ public class Main {
         System.out.println(countBalance/mapas.size());
 
 
-
     }
 
     public static ArrayList createTrees(int count, ArrayList<MyTreeMap> mapas) {
