@@ -63,6 +63,18 @@ public class LinearProbingHashMap<Key, Value> {
         size++;
     }
 
+    public void delete (Key key) {
+        checkKeyNotNull(key);
+        int i = hash(key);
+        int step = hash2(key);
+        while (keys[i] != null) {
+            if (key.equals(keys[i])) {
+                keys[i] = DELETED;
+                values[i] = null;
+                size--;
+            }
+        }
+    }
     public Value get(Key key) {
         checkKeyNotNull(key);
         int i = hash(key);

@@ -24,7 +24,6 @@ public class ChainingHashMap<Key, Value> {
             this.value = value;
         }
     }
-
     public int size() {
         return size;
     }
@@ -59,6 +58,19 @@ public class ChainingHashMap<Key, Value> {
         st[i].addLast(new Node(key, value));
         size++;
     }
+
+    public void deleteByKey (Key key){
+        checkKeyNotNull(key);
+        int i = hash(key);
+        for (Node node : st[i]) {
+            if (key.equals(node.key)) {
+                node.value = null;
+                return;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
 
     public Value get(Key key) {
         checkKeyNotNull(key);
