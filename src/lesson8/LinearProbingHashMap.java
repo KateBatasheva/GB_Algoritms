@@ -16,6 +16,7 @@ public class LinearProbingHashMap<Key, Value> {
         values = (Value[]) new Object[capacity];
     }
 
+
     public int size() {
         return size;
     }
