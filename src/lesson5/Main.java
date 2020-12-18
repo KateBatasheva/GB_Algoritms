@@ -1,0 +1,167 @@
+package lesson5;
+
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
+import sun.awt.Mutex;
+
+import java.io.FileInputStream;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.stream.Stream;
+
+public class Main {
+    private static int totalValue;
+    private static int totalWight;
+    public static void main(String[] args) {
+//        System.out.println(fact(15));
+//        System.out.println(recFact(10));
+
+//        System.out.println(fibo(46));
+//        System.out.println(recFibo(10));
+
+//        System.out.println(triangleNum(5));
+//        System.out.println(recTriangleNum(5));
+
+//        System.out.println(multiply(3, 8));
+//        System.out.println(recMultiply(3, 8));
+
+//        System.out.println(power(3, 8));
+//        System.out.println(recPower(3, 8));
+        Random random = new Random();
+
+        Package pack = new Package(25);
+        Item [] items = new Item[7];
+        for (int i = 0; i <items.length ; i++) {
+            items[i] = new Item (random.nextInt(10)+1,random.nextInt(10)+1);
+        }
+        ArrayList<Item> listItems = new ArrayList<>();
+        for (int i = 0; i < items.length; i++) {
+            listItems.add(items[i]);
+        }
+        ArrayList <Item> packedItems = new ArrayList<>();
+
+         System.out.println(listItems.toString());
+
+        packTo(pack, listItems, packedItems);
+        System.out.println(packedItems.toString());
+         System.out.println("Финальный вес коробки: " + totalWight + "\nФинальная стоимость содержимого: "+ totalValue);
+    }
+
+    private static ArrayList<Item> packTo(Package pack, ArrayList<Item> listItems,ArrayList<Item> packedItems ) {
+        Item temp = null;
+        if (totalWight==pack.getWight()){
+            return packedItems;
+
+        }
+        if (totalWight < pack.getWight()){
+            int j = 0;
+            while (listItems.get(j).getWight()> pack.getWight() - totalWight){
+                if (j == listItems.size()-1){
+                    return packedItems;
+                }
+                j++;
+            }
+            temp = listItems.get(j);
+            for (int i = j+1; i <listItems.size() ; i++) {
+                if (pack.getWight() - totalValue < listItems.get(i).getWight()){
+                    continue;
+                }
+                if (listItems.get(i).getValue()/listItems.get(i).getWight()>temp.getValue()/temp.getWight()){
+                    temp = listItems.get(i);
+                }
+            }
+            System.out.println("remove "+ temp.toString());
+            listItems.remove(temp);
+            packedItems.add(temp);
+            System.out.println("add "+temp);
+        }
+        totalValue += temp.getValue();
+        totalWight+= temp.getWight();
+
+        if (totalWight < pack.getWight()){
+            return packTo(pack, listItems, packedItems);
+        }
+        return packedItems;
+    }
+
+
+    public static int fact(int n) {
+        int value = 1;
+        for (int i = 1; i <= n; i++) {
+            value *= i;
+        }
+        return value;
+    }
+
+    public static int recFact(int n) {
+        if (n <= 1) {
+            return 1;
+        }
+        return recFact(n - 1) * n;
+    }
+
+    public static long fibo(int n) {
+        long a = 1;
+        long b = 1;
+        for (int i = 3; i <= n; i++) {
+            b = b + a;
+            a = b - a;
+        }
+        return b;
+    }
+
+    public static long recFibo(int n) {
+        System.out.print(n + " ");
+        if (n <= 2) {
+            return 1;
+        }
+        return recFibo(n - 2) + recFibo(n - 1);
+    }
+
+    public static int triangleNum(int n) {
+        int sum = 0;
+        for (int i = 1; i <= n; i++) {
+            sum += i;
+        }
+        return sum;
+    }
+
+    public static int recTriangleNum(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        return recTriangleNum(n - 1) + n;
+    }
+
+    public static int multiply(int a, int b) {
+        int value = 0;
+        for (int i = 0; i < b; i++) {
+            value += a;
+        }
+        return value;
+    }
+
+    public static int recMultiply(int a, int b) {
+        if (b == 1) {
+            return a;
+        }
+        return recMultiply(a, b - 1) + a;
+    }
+
+    public static int power (int a, int b){
+        int value = 1;
+        for (int i = 0; i <b ; i++) {
+            value*=a;
+        }
+        return value;
+    }
+
+    public static int recPower (int a, int b){
+        if (b ==1){
+            return a;
+        }
+        return recPower(a,b-1) * a;
+    }
+
+}
